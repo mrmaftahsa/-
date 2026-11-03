@@ -11,5 +11,8 @@ public class AppSmokeTest {
  scene.onActivity(a->{try{Method validator=MainActivity.class.getDeclaredMethod("validateDiary",String.class);validator.setAccessible(true);validator.invoke(a,"[]");try{validator.invoke(a,"[{\"title\":\"bad\"}]");fail("Invalid diary accepted");}catch(InvocationTargetException expected){}}catch(Exception e){throw new AssertionError(e);}});
  }
  }
- private void capture(Instrumentation ins,Context c,String name)throws Exception{android.graphics.Bitmap b=ins.getUiAutomation().takeScreenshot();assertNotNull(b);java.io.File dir=new java.io.File(c.getExternalFilesDir(null),"screenshots");dir.mkdirs();try(java.io.FileOutputStream out=new java.io.FileOutputStream(new java.io.File(dir,name+".png"))){b.compress(android.graphics.Bitmap.CompressFormat.PNG,100,out);}b.recycle();}
+ private void capture(Instrumentation ins,Context c,String name)throws Exception{
+ String command="mkdir -p /sdcard/Download/luqmati-screenshots && screencap -p /sdcard/Download/luqmati-screenshots/"+name+".png";
+ try(android.os.ParcelFileDescriptor fd=ins.getUiAutomation().executeShellCommand(command);java.io.FileInputStream in=new java.io.FileInputStream(fd.getFileDescriptor())){byte[] buffer=new byte[1024];while(in.read(buffer)!=-1){}}
+ }
 }
