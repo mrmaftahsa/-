@@ -13,6 +13,6 @@ public class AppSmokeTest {
  }
  private void capture(Instrumentation ins,Context c,String name)throws Exception{
  String command="mkdir -p /sdcard/Download/luqmati-screenshots && screencap -p /sdcard/Download/luqmati-screenshots/"+name+".png";
- try(android.os.ParcelFileDescriptor fd=ins.getUiAutomation().executeShellCommand(command);java.io.FileInputStream in=new java.io.FileInputStream(fd.getFileDescriptor())){byte[] buffer=new byte[1024];while(in.read(buffer)!=-1){}}
+ try(android.os.ParcelFileDescriptor fd=ins.getUiAutomation().executeShellCommand("sh -c \""+command+"\"");java.io.FileInputStream in=new java.io.FileInputStream(fd.getFileDescriptor())){byte[] buffer=new byte[1024];while(in.read(buffer)!=-1){}}
  }
 }
