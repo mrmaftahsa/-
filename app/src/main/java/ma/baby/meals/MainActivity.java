@@ -7,7 +7,7 @@ public class MainActivity extends Activity {
  @Override public void onCreate(Bundle b){super.onCreate(b);home();}
  @Override public void onResume(){super.onResume();MealReceiver.schedule(this);}
  int dp(int x){return (int)(x*getResources().getDisplayMetrics().density);}
- void base(){ScrollView sc=new ScrollView(this);root=new LinearLayout(this);root.setOrientation(1);root.setPadding(dp(22),dp(38),dp(22),dp(28));root.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);root.setBackgroundColor(Color.rgb(249,246,239));sc.addView(root);setContentView(sc);}
+ void base(){ScrollView sc=new ScrollView(this);root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setPadding(dp(22),dp(38),dp(22),dp(28));root.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);root.setBackgroundColor(Color.rgb(249,246,239));sc.addView(root);setContentView(sc);}
  TextView text(String t,int size){TextView v=new TextView(this);v.setText(t);v.setTextSize(size);v.setTextColor(ink);v.setPadding(0,dp(7),0,dp(7));root.addView(v);return v;}
  void button(String t,Runnable r){Button b=new Button(this);b.setText(t);b.setTextColor(green);root.addView(b);b.setOnClickListener(v->r.run());}
  void title(String t){text(t,30).setTypeface(null,Typeface.BOLD);}
