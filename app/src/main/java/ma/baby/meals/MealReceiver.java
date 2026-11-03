@@ -20,7 +20,7 @@ public class MealReceiver extends BroadcastReceiver {
  NotificationManager nm=(NotificationManager)c.getSystemService(Context.NOTIFICATION_SERVICE);
  nm.createNotificationChannel(new NotificationChannel("meals","تذكيرات الوجبات",NotificationManager.IMPORTANCE_DEFAULT));
  LocalDate b=birth(c); if(b==null)return;
- String body=test?"التذكيرات تعمل. يمكنك تعديل أوقاتها في الإعدادات.":Plan.meal(b,LocalDate.now(),s);
+ String body=test?"التذكيرات تعمل. يمكنك تعديل أوقاتها في الإعدادات.":Meals.title(c,b,LocalDate.now(),s);
  PendingIntent open=PendingIntent.getActivity(c,0,new Intent(c,MainActivity.class),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
  if(Build.VERSION.SDK_INT>=33 && c.checkSelfPermission("android.permission.POST_NOTIFICATIONS")!=android.content.pm.PackageManager.PERMISSION_GRANTED)return;
  nm.notify(s,new Notification.Builder(c,"meals").setSmallIcon(android.R.drawable.ic_popup_reminder).setContentTitle(test?"تجربة تذكير لقمتي":Plan.LABELS[s]).setContentText(body).setStyle(new Notification.BigTextStyle().bigText(body)).setContentIntent(open).setAutoCancel(true).build());
@@ -31,3 +31,4 @@ public class MealReceiver extends BroadcastReceiver {
  schedule(c);
  }
 }
+
