@@ -1,33 +1,41 @@
-# لقمتي — Luqmati
-Arabic, right-to-left Android meal reminder app for a baby from 6 months until her first birthday. Moroccan home ingredients, offline storage, no account, ads or internet permission. Android 8+.
+# لقمتي — Luqmati 1.2
 
-## What is included
-- Date-of-birth setup; age-specific texture advice; browse any day.
-- A transparent seven-day rotation of meal ideas, repeated through the supported age range. Not a bespoke nutritionally complete prescription or 180 unique menus.
-- One, two or three meal opportunities; starts with lunch only. Parent increases frequency according to readiness. Milk guidance always visible.
-- Adjustable breakfast/lunch/dinner reminder times, notification permission handling, a test notification, daily completion checkboxes.
-- Local inexact alarms, restored after restart, clock/time-zone changes and app updates. No reminders after the first birthday.
-- Arabic preparation and feeding guidance with WHO and NHS source links. Common allergens need deliberate introduction and continued inclusion after tolerance; the base rotation is not an allergen-introduction program.
+Arabic Android meal planner for a baby from six months until her first birthday. Offline app, no account, ads, analytics or internet permission. Android 8.0+.
 
-## Build using GitHub (no Android Studio required)
-1. Create a GitHub repository, preferably private.
-2. Extract this ZIP. Put the CONTENTS of `baby-meals` at the repository root: `settings.gradle`, `app`, `tests`, and the hidden `.github` directory must all be included. Use GitHub Desktop to avoid missing hidden files.
-3. Commit and push to `main`. In GitHub open **Actions → Build Android APK**. You can also use **Run workflow**.
-4. After a successful run download **Luqmati-Android-APK** under Artifacts. Extract that ZIP and transfer `app-debug.apk` to your Android phone.
-5. Open the APK, allow installation from that source if prompted, then open لقمتي. Choose the actual birth date, meal frequency and times. Enable reminders and grant notification permission. Use the test notification.
+## Features
 
-GitHub builds the app; GitHub Pages cannot run a native APK. This is a personal debug build, not a Play Store release. CI uses an ephemeral debug signing key: later builds may require uninstalling the old app, losing local settings and checkmarks. For durable updates, configure a private stable signing key before relying on long-term records.
+- Arabic app locale and explicit right-to-left containers, dialogs and text; isolated clock values to preserve number order.
+- 36 rotating recipe ideas built from 16 ingredients common in Moroccan kitchens. Ingredient-specific preparation and readiness-based texture guidance.
+- 12 bundled AI-generated ingredient photos; remaining ingredients use a labeled icon. Photos identify ingredients, not safe serving shapes or portions.
+- Daily meal replacement, recipe search and favorites. The selected recipes feed both notifications and the shopping list.
+- Foods tried/tolerated and excluded-food preferences. Recipes containing egg, dairy, wheat or fish are excluded from automatic suggestions until the parent marks that ingredient as tried/tolerated. A reaction log does not diagnose an allergy or automatically mark a food safe.
+- Food diary with an editable date, food/meal name, ingredients, reaction category, liked-food flag and notes. Edit/delete entries or share a plain-text summary through the Android share sheet.
+- Seven-day shopping checklist starting at the displayed date, using enabled meals and current recipe swaps. Counts mean recipe occurrences, not shopping weights or prescribed portions. Share the list through Android.
+- Backup and restore through Android's file picker. `.luqmati` files include settings, exclusions, favorites, swaps, checkmarks and the diary. Files are not encrypted; choose a private storage location. Import validates data before asking to replace current data. Restored reminders stay off until enabled again.
+- Adjustable approximate meal reminders, notification-permission controls and test notification. Milk guidance and feeding-safety references remain available.
 
-## Local development
-JDK 17, Gradle 8.9, Android SDK 35. Run `gradle assembleDebug lintDebug` from this directory (no Gradle wrapper bundled). AGP 8.7.3 is pinned.
+## Install
 
-## Validation and limitations
-Manifest XML and workflow YAML were parsed successfully. Pure-Java planner tests are included but could not run locally because this environment has a Java runtime without javac; they run in the workflow. Full APK compilation and device testing must still be performed by the GitHub workflow and on a real phone; no APK is bundled. Verify notification delivery with the screen locked, after reboot, after changing times, and after denying/re-enabling permission. Android battery management can delay inexact alarms. Force-stop pauses alarms until reopening. Completion records stay on the device; no backup/export. Arabic UI has not yet been visually inspected on an Android device.
+Open the successful **Build Android APK** run in this repository's Actions tab. Download **Luqmati-Android-APK**, extract its ZIP and open `app-debug.apk` on your Android phone. Choose the real birth date, adjust the number of meals, enable reminders and grant notification permission.
 
-## Feeding sources (reviewed 3 November 2026)
+This is a personal debug APK. Builds use an ephemeral debug signing key; installing a later build may require uninstalling the previous version. Uninstalling erases local data. From v1.2 onward, export a backup before uninstalling and restore it after installation. Versions before v1.2 do not have the in-app backup feature. A permanent private signing key is needed for reliable seamless updates.
+
+## Development and validation
+
+JDK 17, Gradle 8.9, Android SDK 35 and AGP 8.7.3. No Gradle wrapper is bundled.
+
+- `gradle assembleDebug lintDebug`
+- CI runs the original planner tests plus `tests/FeatureTest.java`: catalog consistency, daily coverage, allergen gates, exclusions, recipe overrides, Arabic backup round-trip and rejection of invalid backups.
+- CI also runs `connectedDebugAndroidTest` on an API 35 emulator, launches the Arabic home, shopping, diary, food-preference, settings and guide screens, validates malformed diary rejection and captures screenshots in **Luqmati-UI-checks**.
+- Phone-specific notification behavior, battery optimization, external file providers and installation upgrades still need checking on the user's device.
+
+## Feeding guidance
+
+These are general meal ideas, not a clinician-reviewed complete nutritional plan. Start according to readiness, preserve milk feeds, adjust texture and quantity to the child, and supervise every meal. Do not use ingredient photos as serving instructions. Introduce common allergens individually in small amounts, retain tolerated foods, and seek clinical advice for significant eczema, known allergy or concerning reactions. Excluding foods may reduce variety. Severe breathing difficulty, tongue swelling or collapse requires emergency medical help.
+
+References reviewed 3 November 2026:
+
 - https://www.who.int/health-topics/complementary-feeding
 - https://www.nhs.uk/baby/weaning-and-feeding/babys-first-solid-foods/
-- https://www.nhs.uk/baby/weaning-and-feeding/foods-to-avoid-giving-babies-and-young-children/
 - https://www.nhs.uk/best-start-in-life/baby/weaning/what-to-feed-your-baby/from-around-6-months/
-
-The recipes are generated meal ideas informed by general guidance, not recipes endorsed by these organizations. Discuss individual feeding needs with the child's clinician. No honey before one, no added salt/sugar, safe textures and close supervision. Fully cook eggs, meat and fish. Introduce allergens individually and retain tolerated allergens regularly.
+- https://www.nhs.uk/baby/weaning-and-feeding/foods-to-avoid-giving-babies-and-young-children/
